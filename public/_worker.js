@@ -38,14 +38,14 @@ export default {
           assetEntry.status === 200 &&
           assetEntry.headers.get("content-type").includes("text/html")
         ) {
-          return new Response(
-            JSON.stringify({
-              url: assetUrlWithTrailingSlash.toString(),
-              status: assetEntry.status,
-              headers: [...assetEntry.headers.entries()],
-              body: await assetEntry.text(),
-            })
-          );
+          // return new Response(
+          //   JSON.stringify({
+          //     url: assetUrlWithTrailingSlash.toString(),
+          //     status: assetEntry.status,
+          //     headers: [...assetEntry.headers.entries()],
+          //     body: await assetEntry.text(),
+          //   })
+          // );
           return new Response(null, {
             // Temporary
             status: 302,
@@ -58,6 +58,6 @@ export default {
     }
 
     // Fall back to asset server
-    return env.ASSETS.fetch(request.url, request);
+    return env.ASSETS.fetch(request);
   },
 };

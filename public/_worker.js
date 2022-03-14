@@ -2,9 +2,11 @@ export default {
   async fetch(request, env) {
     let { pathname, origin, search } = new URL(request.url);
 
-    const indexResponse = await env.ASSETS.fetch(new URL("/", origin), request);
-
     if (pathname !== "/") {
+      const indexEtag = env.ASSETS.fetch(new URL("/", origin), request).then(
+        (response) => response.headers.get("etag")
+      );
+
       // Serve requests with trailing slashes
 
       if (pathname.endsWith("/")) {
@@ -21,7 +23,7 @@ export default {
         if (
           assetEntry.status === 200 &&
           assetEntry.headers.get("content-type").includes("text/html") &&
-          indexResponse.headers.get("etag") !== assetEntry.headers.get("etag")
+          (await indexEtag) !== assetEntry.headers.get("etag")
         ) {
           return assetEntry;
         }
@@ -41,7 +43,7 @@ export default {
         if (
           assetEntry.status === 200 &&
           assetEntry.headers.get("content-type").includes("text/html") &&
-          indexResponse.headers.get("etag") !== assetEntry.headers.get("etag")
+          (await indexEtag) !== assetEntry.headers.get("etag")
         ) {
           return new Response(null, {
             // Temporary

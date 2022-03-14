@@ -2,8 +2,13 @@ export default {
   async fetch(request, env) {
     let { pathname, origin, search } = new URL(request.url);
 
+    const indexText = env.ASSETS.fetch(new URL("/", origin), request).then(
+      (response) => response.text()
+    );
+
     if (pathname !== "/") {
       // Serve requests with trailing slashes
+
       if (pathname.endsWith("/")) {
         const assetUrlWithoutTrailingSlash = new URL(
           pathname.slice(0, -1),
@@ -11,13 +16,14 @@ export default {
         );
 
         const assetEntry = await env.ASSETS.fetch(
-          assetUrlWithoutTrailingSlash,
+          assetUrlWithoutTrailingSlash.toString(),
           request
         );
 
         if (
           assetEntry.status === 200 &&
-          assetEntry.headers.get("content-type").includes("text/html")
+          assetEntry.headers.get("content-type").includes("text/html") &&
+          (await assetEntry.text()) !== (await indexText)
         ) {
           return assetEntry;
         }
@@ -30,22 +36,15 @@ export default {
         );
 
         const assetEntry = await env.ASSETS.fetch(
-          assetUrlWithTrailingSlash,
+          assetUrlWithTrailingSlash.toString(),
           request
         );
 
         if (
           assetEntry.status === 200 &&
-          assetEntry.headers.get("content-type").includes("text/html")
+          assetEntry.headers.get("content-type").includes("text/html") &&
+          (await assetEntry.text()) !== (await indexText)
         ) {
-          // return new Response(
-          //   JSON.stringify({
-          //     url: assetUrlWithTrailingSlash.toString(),
-          //     status: assetEntry.status,
-          //     headers: [...assetEntry.headers.entries()],
-          //     body: await assetEntry.text(),
-          //   })
-          // );
           return new Response(null, {
             // Temporary
             status: 302,

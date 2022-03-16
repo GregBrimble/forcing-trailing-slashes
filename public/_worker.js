@@ -10,7 +10,7 @@ export default {
             origin
           );
 
-          assetRequest = new Request(assetUrlWithTrailingSlash, request);
+          let assetRequest = new Request(assetUrlWithTrailingSlash, request);
           assetRequest = new Request(assetRequest, {
             headers: {
               ...Object.fromEntries(request.headers.entries()),

@@ -17,7 +17,9 @@ export default {
           },
         });
 
-        const assetResponse = await env.ASSETS.fetch(assetRequest);
+        const assetResponse = await env.ASSETS.fetch(assetRequest, {
+          redirect: "follow",
+        });
 
         if (
           assetResponse.status === 200 &&

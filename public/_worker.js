@@ -3,33 +3,11 @@ export default {
     let { pathname, origin, search } = new URL(request.url);
 
     if (pathname !== "/") {
-      const indexEtag = env.ASSETS.fetch(new URL("/", origin), request).then(
-        (response) => response.headers.get("etag")
-      );
-
-      // Serve requests with trailing slashes
-
-      if (pathname.endsWith("/")) {
-        const assetUrlWithoutTrailingSlash = new URL(
-          pathname.slice(0, -1),
-          origin
+      if (!pathname.endsWith("/")) {
+        const indexEtag = env.ASSETS.fetch(new URL("/", origin), request).then(
+          (response) => response.headers.get("etag")
         );
 
-        const assetEntry = await env.ASSETS.fetch(
-          assetUrlWithoutTrailingSlash.toString(),
-          request
-        );
-
-        if (
-          assetEntry.status === 200 &&
-          assetEntry.headers.get("content-type").includes("text/html") &&
-          (await indexEtag) !== assetEntry.headers.get("etag")
-        ) {
-          return assetEntry;
-        }
-      }
-      // Redirect requests without trailing slashes
-      else {
         const assetUrlWithTrailingSlash = new URL(
           `${pathname}/${search}`,
           origin

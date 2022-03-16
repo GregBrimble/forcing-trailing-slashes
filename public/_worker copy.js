@@ -9,10 +9,7 @@ export default {
           origin
         );
 
-        const assetEntry = await env.ASSETS.fetch(
-          assetUrlWithTrailingSlash.toString(),
-          request
-        );
+        return env.ASSETS.fetch(assetUrlWithTrailingSlash.toString(), request);
 
         if (
           assetEntry.status === 200 &&

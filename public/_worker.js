@@ -35,6 +35,6 @@ export default {
     }
 
     // Fall back to asset server
-    return env.ASSETS.fetch(request);
+    return env.ASSETS.fetch(request, { redirect: "follow" });
   },
 };

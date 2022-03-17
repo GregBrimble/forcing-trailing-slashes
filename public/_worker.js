@@ -12,8 +12,7 @@ export default {
 
       let assetRequest = new Request(assetUrlWithTrailingSlash, request);
       assetRequest = new Request(assetRequest, {
-        cf: {country: {"foobar"}
-        },
+        cf: { country: "foobar" },
         headers: {
           ...Object.fromEntries(request.headers.entries()),
           "cf-worker": "pages-functions-stage", // Deactivates SPA mode

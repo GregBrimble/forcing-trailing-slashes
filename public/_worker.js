@@ -9,7 +9,13 @@ export default {
     } else {
       const assetPathname = pathname.replace(/\/(index(.html)?)?$/, "");
       const assetURL = new URL(`${assetPathname}${search}`, origin);
-      const assetRequest = new Request(assetURL);
+      let assetRequest = new Request(assetURL, request);
+      assetRequest = new Request(assetRequest, {
+        headers: {
+          ...Object.fromEntries(request.headers.entries()),
+          "cf-worker": "deprecated-pages=disable-spa-mode",
+        },
+      });
 
       const assetResponse = await env.ASSETS.fetch(assetRequest, {
         redirect: "follow",

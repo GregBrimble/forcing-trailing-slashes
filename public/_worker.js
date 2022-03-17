@@ -12,7 +12,7 @@ export default {
       const assetRequest = new Request(assetURL, {
         headers: {
           ...Object.fromEntries(request.headers.entries()),
-          "cf-worker": "deprecated-pages=disable-spa-mode",
+          // "cf-worker": "deprecated-pages=disable-spa-mode",
         },
       });
 

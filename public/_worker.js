@@ -20,6 +20,17 @@ export default {
         redirect: "follow",
       });
 
+      return new Response(
+        JSON.stringify({
+          requestPathname: pathname,
+          assetPathname,
+          requestHeaders: [...assetRequest.headers.entries()],
+          assetResponseStatus: assetResponse.status,
+          assetResponseText: await assetResponse.text(),
+          responseHeaders: [...assetResponse.headers.entries()],
+        })
+      );
+
       if (
         assetResponse.status === 200 &&
         assetResponse.headers.get("content-type").includes("text/html")

@@ -35,7 +35,7 @@ export default {
           },
         });
       } else {
-        return assetResponse;
+        return env.ASSETS.fetch(request);
       }
     }
   },

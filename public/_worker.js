@@ -8,8 +8,8 @@ export default {
       return env.ASSETS.fetch(request, { redirect: "follow" });
     } else {
       const assetPathname = pathname.replace(/index(.html)?$/, "");
-      const assetURL = new URL(`${assetPathname}${search}`, origin);
-      const assetRequest = new Request(assetURL, {
+      // const assetURL = new URL(`${assetPathname}${search}`, origin);
+      const assetRequest = new Request(request, {
         headers: {
           ...Object.fromEntries(request.headers.entries()),
           "cf-worker": "deprecated-pages=disable-spa-mode",

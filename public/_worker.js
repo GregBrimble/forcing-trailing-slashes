@@ -12,10 +12,7 @@ export default {
 
       let assetRequest = new Request(assetUrlWithTrailingSlash, request);
       assetRequest = new Request(assetRequest, {
-        cf: {
-          pages: {
-            spaMode: false,
-          },
+        cf: {country: {"foobar"}
         },
         headers: {
           ...Object.fromEntries(request.headers.entries()),

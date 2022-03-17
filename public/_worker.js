@@ -15,7 +15,7 @@ export default {
         cf: { country: "foobar" },
         headers: {
           ...Object.fromEntries(request.headers.entries()),
-          "cf-worker": "pages-functions-stage", // Deactivates SPA mode
+          "cf-worker": "deprecated-pages=disable-spa-mode",
         },
       });
 

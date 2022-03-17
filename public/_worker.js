@@ -7,7 +7,8 @@ export default {
       // Serve /bar/index.html at /bar/
       return env.ASSETS.fetch(request, { redirect: "follow" });
     } else {
-      const assetRequest = new Request(request, {
+      const assetURL = new URL(`${pathname}/${search}`, origin);
+      const assetRequest = new Request(assetURL, {
         headers: {
           ...Object.fromEntries(request.headers.entries()),
           "cf-worker": "deprecated-pages=disable-spa-mode",

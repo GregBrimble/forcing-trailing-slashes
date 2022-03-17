@@ -12,9 +12,14 @@ export default {
 
       let assetRequest = new Request(assetUrlWithTrailingSlash, request);
       assetRequest = new Request(assetRequest, {
+        cf: {
+          pages: {
+            spaMode: false,
+          },
+        },
         headers: {
           ...Object.fromEntries(request.headers.entries()),
-          "cf-worker": "user-worker", // Deactivates SPA mode
+          "cf-worker": "pages-functions-stage", // Deactivates SPA mode
         },
       });
 

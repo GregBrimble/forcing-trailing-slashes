@@ -7,7 +7,7 @@ export default {
       // Serve /bar/index.html at /bar/
       return env.ASSETS.fetch(request, { redirect: "follow" });
     } else {
-      const assetPathname = pathname.replace(/index(.html)?$/, "");
+      const assetPathname = pathname.replace(/\/index(.html)?$/, "");
       // const assetURL = new URL(`${assetPathname}${search}`, origin);
       const assetRequest = new Request(request, {
         headers: {

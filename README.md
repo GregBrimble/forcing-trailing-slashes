@@ -2,19 +2,12 @@
 
 This example show how to force trailing slashes using a custom `_worker.js` file in your Cloudflare Pages project.
 
-To run this locally, run `npm run build && npm run export` which will build and export your pages into the `out` folder and serve them using `wrangler` by running `npx wrangler pages dev ./out`.
-
 ## Behaviour
 
-For all requests that are:
+For requests to URLS without a trailing slash that would ordinarily serve HTML, we redirect the request to the URL with a trailing slash.
 
-- not `/`
-- not a URL serving a non HTML file e.g. `/_next/static/8TsXBbcStaPyWVGs7Mt1j/_buildManifest.js`
-
-We add a trailing slash and redirect the request.
-
-For requests to URLs that include a trailing slash, we opt out of the default behaviour (which strips them) and serve the page as is.
+For requests to URLs with a trailing slash, we flatten the default redirect (which would ordinarily strip the trailing slash) and serve the page as-is.
 
 ## Usage
 
-Copy the `public/_worker.js` file into your project's build output directory and it should work as is.
+Copy the `_worker.js` file into your project's build output directory.
